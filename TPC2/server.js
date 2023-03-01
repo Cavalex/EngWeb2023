@@ -1,10 +1,16 @@
 var http = require('http');
-var meta = require('./auxx.js');
 var url = require('url');
 var fs = require('fs');
 
+function myDateTime () {
+    var d = new Date().toISOString().substring(0, 16); // converte a data para uma coisa que se consegue ler
+    return d;
+}
+
+var turma = "EngWeb2023::TP1" // o meu tp lol
+
 var myServer = http.createServer(function (req, res) {
-    console.log(req.method + " " + req.url + " " + meta.myDateTime())
+    console.log(req.method + " " + req.url + " " + myDateTime())
     var cssFile = fs.readFileSync("styles.css") // MILAGRE!!!!!!
     switch (req.url){ // this is made to send the css to the browser
         case "/styles.css" :
@@ -36,6 +42,18 @@ var myServer = http.createServer(function (req, res) {
             for (var i = 0; i < data.cidades.length; i++){
                 if (distritos.indexOf(data.cidades[i].distrito) == -1){
                     distritos.push(data.cidades[i].distrito)
+                }
+            }
+
+            var connections = []
+            for (var i = 0; i < data.cidades.length; i++){
+                for (var j = 0; j < data.ligações.length; j++){
+                    if (data.ligações[j].origem == data.cidades[i].id || data.ligações[j].destino == data.cidades[i].id){
+                        var tuple = [data.ligações[j].origem, data.ligações[j].destino, data.ligações[j].distância] // tuple with both cities ids and the distance between them
+                        if (connections.indexOf(tuple) == -1){
+                            connections.push(tuple)
+                        }
+                    }
                 }
             }
             
@@ -126,6 +144,30 @@ var myServer = http.createServer(function (req, res) {
                     res.write("<p>Distrito: <a href=\"http://localhost:7777/distritos\">" + cidade.distrito + "</a></p>") // probably should use an empty url instead of distritos...
                     res.write("<p>População: " + cidade.população + "</p>")
                     res.write("<p>Descrição: " + cidade.descrição + "</p>")
+
+                    res.write(`
+                        </div>
+                        <div class="info-container">
+                        <p class=\"sub-title\">Ligações:</p>
+                    `)
+
+                    // we need to ifs to check if the city is the origin or the destination
+                    for (var i = 0; i < connections.length; i++){
+                        if (connections[i][0] == id){
+                            for (var j = 0; j < data.cidades.length; j++){
+                                if (data.cidades[j].id == connections[i][1]){
+                                    res.write("<p>Para: <a href=\"http://localhost:7777/" + connections[i][1] + "\">" + data.cidades[j].nome + "</a> (" + data.cidades[j].distrito + ") (" + connections[i][2] + " m)</p>")
+                                }
+                            }
+                        }
+                        else if (connections[i][1] == id){
+                            for (var j = 0; j < data.cidades.length; j++){
+                                if (data.cidades[j].id == connections[i][0]){
+                                    res.write("<p>Para: <a href=\"http://localhost:7777/" + connections[i][0] + "\">" + data.cidades[j].nome + "</a> (" + data.cidades[j].distrito + ") (" + connections[i][2] + " m)</p>")
+                                }
+                            }
+                        }
+                    }
 
                     res.write(`
                         </div>
