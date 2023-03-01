@@ -10,7 +10,7 @@
 html, body { height: 100%; }
 body{
     margin: 0;
-    background-color: rgb(169, 202, 202);
+    background-color: #a9caca;
 }
 
 .title{
@@ -37,7 +37,7 @@ body{
 }
 
 .image-descriptor{
-    background-color: #dde3e4;
+    background-color: #f1f1f1;
     border-radius: 5px;
     padding: 20px;
     margin-top:10px;
@@ -48,7 +48,7 @@ body{
     width: 70%;
     padding: 20px;
     margin: 20px;
-    background-color: #dde3e4;
+    background-color: #f1f1f1;
     border-radius: 5px;
 }
 
