@@ -1,0 +1,1 @@
+All HTML files are generated inside the server.js, withuot a python script

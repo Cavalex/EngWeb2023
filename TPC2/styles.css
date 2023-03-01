@@ -39,6 +39,26 @@ body{
     display:flex;
     align-items: center;
     flex-direction: column;
+    width: 18%;
+    padding: 1%;
+    margin: 1%;
+    height: 90%; /* hardcoded, only value that seemed nice */
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+.organizer{
+    display:flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    width:100%;
+}
+
+.info-container{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
     width: 40%;
     padding: 20px;
     margin: 20px;
@@ -46,4 +66,8 @@ body{
     border-radius: 5px;
 }
 
-
+.bottom-spacer{
+    /* height: 50px; */
+    padding-top: 50px;
+    width: 100%;
+}
