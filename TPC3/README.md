@@ -2,7 +2,7 @@ To run the program, first add the ids to the dataset as follows (already added, 
 
 ```python add_ids.py``` -> on windows
 
-```python3 add_ids.py``` -> on windows
+```python3 add_ids.py``` -> on linux
 
 then, run the database using json server as follows:
 
